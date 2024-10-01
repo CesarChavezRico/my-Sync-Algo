@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SyncAlgo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d89725cffc295556248f1bf02c6396a53915402e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+25988412927f486ae219c26259de4b34fdff0c84")]
 [assembly: System.Reflection.AssemblyProductAttribute("SyncAlgo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SyncAlgo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

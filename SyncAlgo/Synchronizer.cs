@@ -35,55 +35,39 @@ namespace Test_1___Synchronization_Algorithm
 
                 /*******************************************************************/
                 // Your code goes here, yield return point by point to synchonize the data streams.
-                var output = new List<Point>();
-                var date_comparison = new List<Tuple<string, Point>>();
 
-                // Filter out streams with empty queues
-                var valid_streams = _sources.Where(stream => stream.Generated.Count > 0).ToList();
-                if (valid_streams.Count <= 0)
+                // Priority queue to store the top point of each stream
+                var pq = new PriorityQueue<(DataSource stream, Point point), DateTime>();
+
+                // Initialize the priority queue with the top points of each stream
+                foreach (var stream in _sources)
                 {
-                    yield break;
+                    if (stream.Generated.Count > 0)
+                    {
+                        var p = stream.Generated.Peek();
+                        pq.Enqueue((stream, p), p.Time);  // p.Time is used as the priority
+                    }
                 }
 
-                // Collect the top point from each valid stream
-                foreach (var stream in valid_streams)
+                // While the priority queue is not empty, process the DataSources
+                while (pq.Count > 0)
                 {
-                    var p = stream.Generated.Peek();
-                    date_comparison.Add(new Tuple<string, Point>(stream.Name, p));
+                    // Dequeue the DataSource with the earliest point
+                    var (stream, point) = pq.Dequeue();
+
+                    // Yield the point
+                    yield return stream.Generated.Dequeue();  // Return and remove the point from the queue
+                    
+                    // If the stream still has points, enqueue the next one
+                    if (stream.Generated.Count > 0)
+                    {
+                        var next_point = stream.Generated.Peek();
+                        pq.Enqueue((stream, next_point), next_point.Time);
+                    }
                 }
 
-                // Sort points by their time in ascending order
-                date_comparison = date_comparison.OrderBy(point => point.Item2.Time).ToList();
-
-                while (date_comparison.Count > 0)
-                {
-                    // Find the stream with the oldest point and dequeue it
-                    var oldest_stream_name = date_comparison[0].Item1;
-                    var stream = valid_streams.First(s => s.Name == oldest_stream_name);
-                    var point_to_yield = stream.Generated.Dequeue();
-                    yield return point_to_yield;
-
-                    // If the stream is now empty, remove it
-                    if (stream.Generated.Count == 0)
-                    {
-                        valid_streams.Remove(stream);
-                        date_comparison.RemoveAt(0); // Remove the processed stream from comparison
-                    }
-                    else
-                    {
-                        // Update the top point for this stream in the comparison list
-                        var new_point = stream.Generated.Peek();
-                        date_comparison[0] = new Tuple<string, Point>(stream.Name, new_point);
-                        
-                        // Re-sort to maintain the correct order
-                        date_comparison = date_comparison.OrderBy(point => point.Item2.Time).ToList();
-                    }
-}
-
-
-
-
-
+                Console.WriteLine("All streams processed, exiting.");
+                yield break;
 
                 /*******************************************************************/
             }
