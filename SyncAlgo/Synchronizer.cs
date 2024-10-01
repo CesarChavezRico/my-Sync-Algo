@@ -35,33 +35,50 @@ namespace Test_1___Synchronization_Algorithm
 
                 /*******************************************************************/
                 // Your code goes here, yield return point by point to synchonize the data streams.
-
+                var output = new List<Point>();
                 var date_comparison = new List<Tuple<string, Point>>();
-                // Filter out streams with empty Generated queues
-                var valid_streams = _sources.Where(stream => stream.Generated.Count > 0).ToList();
 
+                // Filter out streams with empty queues
+                var valid_streams = _sources.Where(stream => stream.Generated.Count > 0).ToList();
                 if (valid_streams.Count <= 0)
                 {
-                   yield break; 
+                    yield break;
                 }
 
+                // Collect the top point from each valid stream
                 foreach (var stream in valid_streams)
                 {
-                    // get all the points on the top of each valid stream queue to compare dates
                     var p = stream.Generated.Peek();
                     date_comparison.Add(new Tuple<string, Point>(stream.Name, p));
                 }
 
-                date_comparison = (from point in date_comparison orderby point.Item2.Time ascending select point).ToList();
-                foreach (var stream in valid_streams)
+                // Sort points by their time in ascending order
+                date_comparison = date_comparison.OrderBy(point => point.Item2.Time).ToList();
+
+                while (date_comparison.Count > 0)
                 {
-                    // find the stream with the oldest point and yield return the top most point on the queue
-                    if (stream.Name == date_comparison[0].Item1)
+                    // Find the stream with the oldest point and dequeue it
+                    var oldest_stream_name = date_comparison[0].Item1;
+                    var stream = valid_streams.First(s => s.Name == oldest_stream_name);
+                    var point_to_yield = stream.Generated.Dequeue();
+                    yield return point_to_yield;
+
+                    // If the stream is now empty, remove it
+                    if (stream.Generated.Count == 0)
                     {
-                        var point_to_yeild = stream.Generated.Dequeue();
-                        yield return point_to_yeild;
+                        valid_streams.Remove(stream);
+                        date_comparison.RemoveAt(0); // Remove the processed stream from comparison
                     }
-                }
+                    else
+                    {
+                        // Update the top point for this stream in the comparison list
+                        var new_point = stream.Generated.Peek();
+                        date_comparison[0] = new Tuple<string, Point>(stream.Name, new_point);
+                        
+                        // Re-sort to maintain the correct order
+                        date_comparison = date_comparison.OrderBy(point => point.Item2.Time).ToList();
+                    }
+}
 
 
 
