@@ -36,36 +36,30 @@ namespace Test_1___Synchronization_Algorithm
                 /*******************************************************************/
                 // Your code goes here, yield return point by point to synchonize the data streams.
 
-                var output = new List<Point>();
                 var date_comparison = new List<Tuple<string, Point>>();
-                var processed_streams = new List<string>();
+                // Filter out streams with empty Generated queues
+                var valid_streams = _sources.Where(stream => stream.Generated.Count > 0).ToList();
 
-
-                foreach (var stream in _sources)
+                if (valid_streams.Count <= 0)
                 {
-                    // get all the points on the top of each stream queue to compare dates
-                    if (stream.Generated.Count > 0)
-                    {
-                        var p = stream.Generated.Peek();
-                        date_comparison.Add(new Tuple<string, Point>(stream.Name, p));
-                    }
+                   yield break; 
+                }
+
+                foreach (var stream in valid_streams)
+                {
+                    // get all the points on the top of each valid stream queue to compare dates
+                    var p = stream.Generated.Peek();
+                    date_comparison.Add(new Tuple<string, Point>(stream.Name, p));
                 }
 
                 date_comparison = (from point in date_comparison orderby point.Item2.Time ascending select point).ToList();
-                foreach (var stream in _sources)
+                foreach (var stream in valid_streams)
                 {
                     // find the stream with the oldest point and yield return the top most point on the queue
-                    if (date_comparison.Count > 0)
+                    if (stream.Name == date_comparison[0].Item1)
                     {
-                        if (stream.Name == date_comparison[0].Item1)
-                        {
-                            var point_to_yeild = stream.Generated.Dequeue();
-                            yield return point_to_yeild;
-                        }
-                    }
-                    else
-                    {
-                        yield break;
+                        var point_to_yeild = stream.Generated.Dequeue();
+                        yield return point_to_yeild;
                     }
                 }
 

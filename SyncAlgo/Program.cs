@@ -18,7 +18,7 @@ namespace Test_1___Synchronization_Algorithm
         {
             Console.WriteLine("Test1.Main(): Generating data... ");
             //Parameters:
-            var streamCount = 20;
+            var streamCount = 30;
             var period = TimeSpan.FromDays(365);
             var seedDensity = TimeSpan.FromSeconds(60);
 

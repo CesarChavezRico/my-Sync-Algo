@@ -12,3 +12,4 @@
 /Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.pdb
 /Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.genruntimeconfig.cache
 /Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/ref/SyncAlgo.dll
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.sourcelink.json
