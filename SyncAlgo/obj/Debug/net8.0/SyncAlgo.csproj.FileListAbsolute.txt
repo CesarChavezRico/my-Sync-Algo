@@ -1,0 +1,14 @@
+/Users/cesar/my Sync Algo/SyncAlgo/bin/Debug/net8.0/SyncAlgo
+/Users/cesar/my Sync Algo/SyncAlgo/bin/Debug/net8.0/SyncAlgo.deps.json
+/Users/cesar/my Sync Algo/SyncAlgo/bin/Debug/net8.0/SyncAlgo.runtimeconfig.json
+/Users/cesar/my Sync Algo/SyncAlgo/bin/Debug/net8.0/SyncAlgo.dll
+/Users/cesar/my Sync Algo/SyncAlgo/bin/Debug/net8.0/SyncAlgo.pdb
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.GeneratedMSBuildEditorConfig.editorconfig
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.AssemblyInfoInputs.cache
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.AssemblyInfo.cs
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.csproj.CoreCompileInputs.cache
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.dll
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/refint/SyncAlgo.dll
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.pdb
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/SyncAlgo.genruntimeconfig.cache
+/Users/cesar/my Sync Algo/SyncAlgo/obj/Debug/net8.0/ref/SyncAlgo.dll
